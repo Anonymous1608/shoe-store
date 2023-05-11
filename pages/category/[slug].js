@@ -89,27 +89,41 @@ const Category = ({category, products, slug}) => {
 
 export default Category;
 
-export async function getStaticPaths() {
-  const category = await fetchDataApi("/api/categories?populate=*");
+// export async function getStaticPaths() {
+//   const category = await fetchDataApi("/api/categories?populate=*");
 //   const paths = category?.data?.map((c) => ({
 //       params: {
 //           slug: c.attributes.slug,
 //       },
 //   }));
 
-    const paths = category?.data?.map((c) => {
-        return {
-          params: {
-               slug: c.attributes.slug,
-           },
-        }
-       });
+//     const paths = category?.data?.map((c) => {
+//         return {
+//           params: {
+//                slug: c.attributes.slug,
+//            },
+//         }
+//        });
+
+//   return {
+//       paths,
+//       fallback: false,
+//   };
+// }
+
+export async function getStaticPaths() {
+  const category = await fetchDataApi("/api/categories?populate=*");
+  
+  const paths = category?.data?.map((c) => ({
+    params: { slug: c.attributes.slug },
+  }));
 
   return {
-      paths,
-      fallback: false,
+    paths: paths || [], // Ensure paths is an array even if it's null or undefined
+    fallback: false,
   };
 }
+
 
 
 export async function getStaticProps({ params: { slug } }) {
