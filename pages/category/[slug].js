@@ -119,7 +119,7 @@ export async function getStaticPaths() {
   }));
 
   return {
-    paths: paths || [], // Ensure paths is an array even if it's null or undefined
+    paths: paths || [],
     fallback: false,
   };
 }
